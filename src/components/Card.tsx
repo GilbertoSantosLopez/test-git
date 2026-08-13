@@ -1,29 +1,35 @@
 interface CardProps {
+  number: string
   title: string
   description: string
-  variant?: 'green' | 'blue' | 'purple'
+  variant: 'emerald' | 'cyan' | 'blue'
 }
 
 function Card({
+  number,
   title,
   description,
-  variant = 'green',
+  variant,
 }: CardProps) {
-  const variantClasses = {
-    green: 'border-emerald-400',
-    blue: 'border-sky-400',
-    purple: 'border-purple-400',
+  const accents: Record<CardProps['variant'], string> = {
+    emerald: 'border-emerald-400 text-emerald-400',
+    cyan: 'border-cyan-400 text-cyan-400',
+    blue: 'border-blue-400 text-blue-400',
   }
 
   return (
     <article
-      className={`rounded-xl border-2 bg-white p-6 shadow-sm ${variantClasses[variant]}`}
+      className={`group relative flex h-full flex-col rounded-2xl border bg-slate-950 p-6 transition duration-300 hover:-translate-y-1 hover:bg-slate-900 ${accents[variant]}`}
     >
-      <h2 className="mb-3 text-xl font-bold text-slate-900">
+      <span className="mb-8 font-mono text-sm font-bold">
+        {number}
+      </span>
+
+      <h2 className="mb-4 text-xl font-black uppercase tracking-tight text-white sm:text-2xl">
         {title}
       </h2>
 
-      <p className="text-slate-600">
+      <p className="text-sm leading-7 text-slate-400 sm:text-base">
         {description}
       </p>
     </article>

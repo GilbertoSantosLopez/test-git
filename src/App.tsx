@@ -5,103 +5,138 @@ import Card from './components/Card'
 
 interface CardData {
   id: number
+  number: string
   title: string
   description: string
-  variant: 'green' | 'blue' | 'purple'
+  variant: 'emerald' | 'cyan' | 'blue'
 }
 
+const baseCards: CardData[] = [
+  {
+    id: 1,
+    number: '01',
+    title: 'React',
+    description:
+      'Construye interfaces mediante componentes independientes y reutilizables.',
+    variant: 'emerald',
+  },
+  {
+    id: 2,
+    number: '02',
+    title: 'TypeScript',
+    description:
+      'Agrega tipado estático para detectar errores antes de ejecutar la aplicación.',
+    variant: 'cyan',
+  },
+  {
+    id: 3,
+    number: '03',
+    title: 'Tailwind CSS',
+    description:
+      'Permite construir sistemas visuales responsivos mediante clases utilitarias.',
+    variant: 'blue',
+  },
+]
+
+const advancedCards: CardData[] = [
+  {
+    id: 1,
+    number: '01',
+    title: 'Contratos',
+    description:
+      'Las interfaces de TypeScript establecen exactamente qué datos acepta cada componente.',
+    variant: 'emerald',
+  },
+  {
+    id: 2,
+    number: '02',
+    title: 'Estado',
+    description:
+      'useState permite modificar información y actualizar automáticamente la interfaz.',
+    variant: 'cyan',
+  },
+  {
+    id: 3,
+    number: '03',
+    title: 'Responsive',
+    description:
+      'Los breakpoints de Tailwind permiten adaptar la composición a distintos tamaños de pantalla.',
+    variant: 'blue',
+  },
+]
+
 function App() {
-  const [isAdvanced, setIsAdvanced] = useState<boolean>(false)
+  const [showAdvanced, setShowAdvanced] = useState<boolean>(false)
 
-  const basicCards: CardData[] = [
-    {
-      id: 1,
-      title: 'React',
-      description:
-        'Construcción de interfaces mediante componentes reutilizables.',
-      variant: 'blue',
-    },
-    {
-      id: 2,
-      title: 'TypeScript',
-      description:
-        'Tipado estático para desarrollar aplicaciones más seguras.',
-      variant: 'purple',
-    },
-    {
-      id: 3,
-      title: 'Props',
-      description:
-        'Permiten enviar información dinámica entre componentes.',
-      variant: 'green',
-    },
-  ]
+  const cards = showAdvanced ? advancedCards : baseCards
 
-  const advancedCards: CardData[] = [
-    {
-      id: 1,
-      title: 'Componentización',
-      description:
-        'Divide la interfaz en piezas independientes y reutilizables.',
-      variant: 'blue',
-    },
-    {
-      id: 2,
-      title: 'Estado',
-      description:
-        'useState permite almacenar información que puede cambiar durante la ejecución.',
-      variant: 'purple',
-    },
-    {
-      id: 3,
-      title: 'Renderizado dinámico',
-      description:
-        'React vuelve a renderizar la interfaz cuando cambia el estado.',
-      variant: 'green',
-    },
-  ]
-
-  const cards = isAdvanced ? advancedCards : basicCards
-
-  const handleChangeContent = () => {
-    setIsAdvanced((previousValue) => !previousValue)
+  const handleToggleCards = () => {
+    setShowAdvanced((currentValue) => !currentValue)
   }
 
   return (
-    <div className="min-h-screen bg-slate-100">
-      <Navbar />
+    <div
+      id="inicio"
+      className="min-h-screen bg-slate-950 text-white"
+    >
+      <Navbar
+        brand="Frontend Lab"
+        subtitle="React + TypeScript + Tailwind"
+      />
 
-      <main className="mx-auto max-w-6xl px-6 py-12">
-        <section className="mb-10 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-slate-900">
-            Componentes con React y TypeScript
-          </h2>
+      <main className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
+        <section className="mb-14 grid gap-10 lg:grid-cols-[1.4fr_0.6fr] lg:items-end">
+          <div>
+            <p className="mb-4 font-mono text-sm font-bold uppercase tracking-[0.25em] text-emerald-400">
+              Arquitectura frontend
+            </p>
 
-          <p className="mx-auto mb-6 max-w-2xl text-slate-600">
-            Ejemplo de componentes reutilizables, props tipadas y manejo de
-            estado con useState.
-          </p>
+            <h1 className="max-w-4xl text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl lg:text-7xl">
+              Componentes estrictos.
+              <span className="block text-slate-500">
+                Interfaz flexible.
+              </span>
+            </h1>
+          </div>
 
-          <Button
-            label={
-              isAdvanced
-                ? 'Mostrar conceptos básicos'
-                : 'Mostrar conceptos avanzados'
-            }
-            onClick={handleChangeContent}
-            variant="primary"
-          />
+          <div className="lg:justify-self-end">
+            <Button
+              label={
+                showAdvanced
+                  ? 'Ver conceptos base'
+                  : 'Ver conceptos avanzados'
+              }
+              onClick={handleToggleCards}
+              variant="primary"
+            />
+          </div>
         </section>
 
-        <section className="grid gap-6 md:grid-cols-3">
+        <section
+          aria-label="Conceptos principales"
+          className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
+        >
           {cards.map((card) => (
             <Card
               key={card.id}
+              number={card.number}
               title={card.title}
               description={card.description}
               variant={card.variant}
             />
           ))}
+        </section>
+
+        <section className="mt-16 border-t border-slate-800 pt-8">
+          <div className="flex flex-col gap-3 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              Arquitectura basada en componentes reutilizables.
+            </p>
+
+            <p>
+              TypeScript estricto · Tailwind CSS
+            </p>
+          </div>
         </section>
       </main>
     </div>
