@@ -9,18 +9,21 @@ function Button({
   onClick,
   variant = 'primary',
 }: ButtonProps) {
-  const variantClasses = {
+  const variants: Record<
+    NonNullable<ButtonProps['variant']>,
+    string
+  > = {
     primary:
-      'bg-emerald-500 text-slate-950 hover:bg-emerald-400',
+      'bg-emerald-400 text-slate-950 hover:bg-emerald-300 focus:ring-emerald-400',
     secondary:
-      'bg-slate-700 text-white hover:bg-slate-600',
+      'border border-slate-700 bg-slate-900 text-white hover:bg-slate-800 focus:ring-slate-500',
   }
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-lg px-5 py-3 font-semibold transition ${variantClasses[variant]}`}
+      className={`inline-flex min-h-12 items-center justify-center rounded-xl px-6 py-3 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-950 ${variants[variant]}`}
     >
       {label}
     </button>
